@@ -19,8 +19,7 @@ var WeatherMessage = ({city, temp}) => {
 
 	return (
 		<div>
-			<h4>City: {city}</h4>
-			<h4>Temperature: {temp}</h4>
+			<h4>It's {temp} &deg; C in {city}</h4>
 		</div>
 	);
 }
