@@ -12,22 +12,18 @@ var WeatherForm = React.createClass({
 		return (
 			<div>
 				<form onSubmit={this.sendCityName}>
-					{this.errorMessage()}
 					<input type="text" placeholder="Enter a city name like San Francisco, CA..." ref="cityName"/>
 					<button className="button expanded hollow">Get Weather</button>
+					{this.errorMessage()}
 				</form>
 			</div>
 		);
 	},
 
 	errorMessage: function() {
-		const erroStyle = {
-			color: 'red',
-			fontWeight: 'bold'
-		};
 
 		if(! this.state.error) return null;
-		return <p style={erroStyle}>{this.state.error}</p>;
+		return <p className="text-center callout alert">{this.state.error}</p>;
 	},
 
 	sendCityName(event) {
