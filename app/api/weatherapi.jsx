@@ -8,7 +8,6 @@ module.exports = {
 		var requestURL = `${MAP_URL}&q=${city}`;
 
 		return axios.get(requestURL).then(function(res) {
-
 			if(res.data.cod && res.data.message) {
 				throw new Error(res.data.message);
 			}

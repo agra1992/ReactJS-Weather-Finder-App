@@ -6,7 +6,8 @@ var WeatherAPI = require('WeatherAPI');
 var Weather = React.createClass({
 	getInitialState: function() {
 		return {
-			isLoading: false
+			isLoading: false,
+			errorMessage: null
 		};
 	},
 
@@ -16,29 +17,42 @@ var Weather = React.createClass({
 
 		this.setState({ isLoading: true });
 
-		console.log(cityName);
-		WeatherAPI.getTemp(cityName).then(function(temp) {
-			that.setState({
-				city: cityName,
-				temp: temp,
-				isLoading: false
+		if(cityName) {
+			WeatherAPI.getTemp(cityName).then(function(temp) {
+				that.setState({
+					city: cityName,
+					temp: temp,
+					isLoading: false,
+					errorMessage: undefined
+				});
+			}, function(err) {
+				that.setState({
+					errorMessage: err.message,
+					isLoading: false
+				});
 			});
-		}, function(err) {
-			that.setState({
-				city: 'NA',
-				temp: 'NA',
-				isLoading: false
+		}
+		else {
+			this.setState({
+				city: null,
+				temp: null,
+				isLoading: true
 			});
-			alert(err);
-		});
+		}
 	},
 
 	render: function() {
-		var {isLoading, city, temp} = this.state;
+		var {isLoading, city, temp, errorMessage} = this.state;
 
 		function renderMessage() {
-			if(isLoading) {
-				return <h4 className="text-center">Retrieving Weather...</h4>
+			if(errorMessage) {
+				return <h4 className="text-center callout alert">{ errorMessage }</h4>
+			}
+			if(!city || !temp) {
+				return null;
+			}
+			else if(isLoading) {
+				return <h4 className="text-center callout primary">Retrieving Weather...</h4>
 			} else if (temp && city) {
 				return <WeatherMessage city={city} temp={temp}/>;
 			}

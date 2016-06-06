@@ -7,12 +7,16 @@ var WeatherForm = React.createClass({
 		};
 	},
 
+	propTypes: {
+		getCityName: React.PropTypes.func.isRequired
+	},
+
 	render: function() {
 
 		return (
 			<div>
 				<form onSubmit={this.sendCityName}>
-					<input type="text" placeholder="Enter a city name like San Francisco, CA..." ref="cityName"/>
+					<input type="text" placeholder="Enter a city name like San Francisco, CA or London" ref="cityName"/>
 					<button className="button expanded hollow">Get Weather</button>
 					{this.errorMessage()}
 				</form>
@@ -37,8 +41,10 @@ var WeatherForm = React.createClass({
 			this.props.getCityName(cityName);
 			this.setError(undefined);
 		}
-		else
+		else {
 			this.setError('Please enter a city name');
+			this.props.getCityName(undefined);
+		}
 
 		cityRef.value = '';
 	},
