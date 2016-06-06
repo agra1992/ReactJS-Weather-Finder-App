@@ -50,7 +50,7 @@ var Weather = React.createClass({
 				});
 			}, function(err) {
 				that.setState({
-					errorMessage: err.message,
+					errorMessage: 'Please enter a valid city name.',
 					isLoading: false
 				});
 			});
