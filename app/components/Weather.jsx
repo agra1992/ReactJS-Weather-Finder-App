@@ -46,7 +46,7 @@ var Weather = React.createClass({
 
 		function renderMessage() {
 			if(errorMessage) {
-				return <h4 className="text-center callout alert">{ errorMessage }</h4>
+				return <p className="text-center callout alert">{ errorMessage }</p>
 			}
 			if(!city || !temp) {
 				return null;
