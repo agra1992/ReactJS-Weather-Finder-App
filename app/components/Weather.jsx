@@ -11,11 +11,34 @@ var Weather = React.createClass({
 		};
 	},
 
+	componentDidMount: function() {
+		var location = this.props.location.query.location;
+
+		if(location && location.length > 0) {
+			this.getCityName(location);
+			window.location.hash = '#/';
+		}
+	},
+
+	componentWillReceiveProps: function(newProps) {
+		var location = newProps.location.query.location;
+
+		if(location && location.length > 0) {
+			this.getCityName(location);
+			window.location.hash = '#/';
+		}
+	},
+
 	getCityName: function(cityName) {
 
 		var that = this;
 
-		this.setState({ isLoading: true });
+		this.setState({
+			isLoading: true,
+			errorMessage: undefined,
+			location: undefined,
+			temp: undefined
+		});
 
 		if(cityName) {
 			WeatherAPI.getTemp(cityName).then(function(temp) {
